@@ -5,6 +5,9 @@ import org.acme.client.TaskService;
 import org.acme.client.CategoryService;
 import org.acme.dto.TaskDTO;
 import org.acme.dto.CategoryDTO;
+import org.acme.dto.TaskWithCategoryDTO;
+import org.acme.exception.ErrorResponse;
+import org.acme.exception.ServiceException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import jakarta.inject.Inject;
@@ -12,6 +15,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
@@ -94,5 +99,56 @@ public class GatewayResource {
         return categoryService.deleteCategory(id);
     }
 
+    @GET
+    @Path("/tasks/with-category")
+    public Response getTasksWithCategories() {
+        try {
+            List<CategoryDTO> categories = categoryService.getAllCategories();
+            Map<Long, String> categoryMap = categories.stream()
+                    .collect(Collectors.toMap(
+                            category -> category.id,
+                            category -> category.name,
+                            (existing, replacement) -> existing
+                    ));
+
+            List<TaskDTO> tasks = taskService.getAllTasks();
+            List<TaskWithCategoryDTO> tasksWithCategories = tasks.stream()
+                    .map(task -> new TaskWithCategoryDTO(
+                            task,
+                            categoryMap.getOrDefault(task.categoryId, "Sin categoría")
+                    ))
+                    .collect(Collectors.toList());
+
+            return Response.ok(tasksWithCategories).build();
+        } catch (Exception e) {
+            throw new ServiceException("Error al obtener tareas con categorías", e);
+        }
+    }
+
+    @GET
+    @Path("/tasks/{id}/with-category")
+    public Response getTaskWithCategory(@PathParam("id") Long id) {
+        try {
+            TaskDTO task = taskService.getTask(id);
+            if (task == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(new ErrorResponse("Tarea no encontrada"))
+                        .build();
+            }
+
+            String categoryName = "Sin categoría";
+            if (task.categoryId != null) {
+                CategoryDTO category = categoryService.getCategory(task.categoryId);
+                if (category != null) {
+                    categoryName = category.name;
+                }
+            }
+
+            TaskWithCategoryDTO taskWithCategory = new TaskWithCategoryDTO(task, categoryName);
+            return Response.ok(taskWithCategory).build();
+        } catch (Exception e) {
+            throw new ServiceException("Error al obtener tarea con categoría", e);
+        }
+    }
 
 }

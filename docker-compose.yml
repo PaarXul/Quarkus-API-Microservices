@@ -1,0 +1,56 @@
+version: '3'
+services:
+  todo-db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: todo_db
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - todo_data:/var/lib/postgresql/data
+
+  task-service:
+    build:
+      context: ./task-service
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8081:8081"
+    environment:
+      - QUARKUS_HTTP_PORT=8081
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://todo-db:5432/todo_db
+      - QUARKUS_DATASOURCE_USERNAME=todo_user
+      - QUARKUS_DATASOURCE_PASSWORD=todo_password
+    depends_on:
+      - todo-db
+
+  category-service:
+    build:
+      context: ./category-service
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8082:8082"
+    environment:
+      - QUARKUS_HTTP_PORT=8082
+      - QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://todo-db:5432/todo_db
+      - QUARKUS_DATASOURCE_USERNAME=todo_user
+      - QUARKUS_DATASOURCE_PASSWORD=todo_password
+    depends_on:
+      - todo-db
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+    environment:
+      - TASK_API_MP_REST_URL=http://task-service:8081
+      - CATEGORY_API_MP_REST_URL=http://category-service:8082
+    depends_on:
+      - task-service
+      - category-service
+
+volumes:
+  todo_data:

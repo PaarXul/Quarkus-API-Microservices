@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "6da79816-aa09-4af4-a90c-3b6e6822b1c5",
+		"name": "Quarkus API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16722340",
+		"_collection_link": "https://sri-development.postman.co/workspace/Team-SRI-Develpment-Workspace~28e35d46-fc33-4751-b0b9-0f4a389e2610/collection/16722340-6da79816-aa09-4af4-a90c-3b6e6822b1c5?action=share&source=collection_link&creator=16722340"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Obtener Tareas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}tasks",
+							"host": [
+								"{{URL}}tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Tareas con el nombre categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}tasks/with-category",
+							"host": [
+								"{{URL}}tasks"
+							],
+							"path": [
+								"with-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener una tareas en especifico con su nombre de categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}tasks/2/with-category",
+							"host": [
+								"{{URL}}tasks"
+							],
+							"path": [
+								"2",
+								"with-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Tareas Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}tasks/2/with-category",
+							"host": [
+								"{{URL}}tasks"
+							],
+							"path": [
+								"2",
+								"with-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Tareas Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}tasks",
+							"host": [
+								"{{URL}}tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Tareas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Crear Task\",\n    \"description\": \"Como Crear Tareas\",\n    \"completed\": false,\n    \"categoryId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}tasks",
+							"host": [
+								"{{URL}}tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Tareas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Crear Task\",\n    \"description\": \"Como Crear Tareas\",\n    \"completed\": true,\n    \"categoryId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}tasks/1",
+							"host": [
+								"{{URL}}tasks"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Obtener Categorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}categories",
+							"host": [
+								"{{URL}}categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Tareas Por Categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/tasks/category/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Categorias por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}categories/1",
+							"host": [
+								"{{URL}}categories"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Categorias Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"NO INICIADA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}categories",
+							"host": [
+								"{{URL}}categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Categoria por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"NO INICIADA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}categories/1",
+							"host": [
+								"{{URL}}categories"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Categoria Por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"NO INICIADA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}categories/1",
+							"host": [
+								"{{URL}}categories"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8080/api/",
+			"type": "string"
+		}
+	]
+}
